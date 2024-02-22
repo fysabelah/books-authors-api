@@ -4,7 +4,7 @@ services:
     container_name: mongodb
     restart: unless-stopped
     volumes:
-      - /home/docker-volumes/mongo-database:/data/db
+      - mongo-database:/data/db
     ports:
       - 27017:27017
     environment:
@@ -35,3 +35,6 @@ services:
 
 networks:
   mongo-db-network:
+
+volumes:
+  mongo-database:
