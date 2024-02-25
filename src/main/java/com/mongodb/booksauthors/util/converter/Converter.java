@@ -36,16 +36,14 @@ public interface Converter<T extends Serializable, D extends Dto> {
         return documents.stream().map(this::convert).toList();
     }
 
-    default List<T> convertDto(List<D> dtos) {
+    default List<T> convert(List<D> dtos) {
         if (dtos == null) {
             return Collections.emptyList();
         }
 
         List<T> documents = new ArrayList<>();
 
-        dtos.forEach(item -> {
-            documents.add(convert(item));
-        });
+        dtos.forEach(item -> documents.add(convert(item)));
 
         return documents;
     }

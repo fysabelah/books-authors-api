@@ -2,6 +2,7 @@ package com.mongodb.booksauthors.controllers;
 
 import com.mongodb.booksauthors.services.BookService;
 import com.mongodb.booksauthors.util.dto.BookDto;
+import com.mongodb.booksauthors.util.enums.Genre;
 import com.mongodb.booksauthors.util.exceptions.ValidationsException;
 import com.mongodb.booksauthors.util.pagination.PagedResponse;
 import com.mongodb.booksauthors.util.pagination.Pagination;
@@ -21,13 +22,22 @@ public class BookController {
     private BookService service;
 
     @PostMapping
-    public ResponseEntity<BookDto> insert(@Valid @RequestBody BookDto book) {
+    public ResponseEntity<BookDto> insert(@Valid @RequestBody BookDto book) throws ValidationsException {
         return ResponseEntity.ok(service.insert(book));
     }
 
-    @PutMapping
-    public ResponseEntity<BookDto> update(@Valid @RequestBody BookDto book) throws ValidationsException {
-        return ResponseEntity.ok(service.update(book));
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<BookDto> update(@PathVariable String id,
+                                          @RequestParam String title,
+                                          @Parameter(description = "New genre") @RequestParam(required = false) Genre genre,
+                                          @Parameter(description = "New page quantity. The value should be greater than 0.", example = "5") @RequestParam(required = false) Integer pages) throws ValidationsException {
+        return ResponseEntity.ok(service.update(id, title, genre, pages));
+    }
+
+    @PutMapping(value = "/{id}/author/{authorId}")
+    public ResponseEntity<BookDto> removeAuthor(@PathVariable String id,
+                                                @PathVariable String authorId) throws ValidationsException {
+        return ResponseEntity.ok(service.removeAuthor(id, authorId));
     }
 
     @GetMapping(value = "/{id}")

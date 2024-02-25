@@ -17,6 +17,7 @@ services:
   mongo-express:
     image: mongo-express
     container_name: mongo-interface
+    restart: unless-stopped
     ports:
       - 27018:8081
     environment:
