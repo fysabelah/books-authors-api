@@ -1,0 +1,26 @@
+#
+# Build stage
+#
+FROM maven:3.9.6-amazoncorretto-17 AS build
+
+WORKDIR /bookstore
+
+COPY src /bookstore/src
+COPY pom.xml /bookstore/pom.xml
+COPY src/main/resources/application.properties /bookstore/application.properties
+
+RUN mvn -f /bookstore/pom.xml clean package -DskipTests
+
+#
+# Package stage
+#
+FROM amazoncorretto:17-alpine-jdk
+
+WORKDIR /bookstore
+
+COPY --from=build /bookstore/target/*.jar /bookstore/bookstore-app.jar
+COPY --from=build /bookstore/application.properties /bookstore/application.properties
+
+EXPOSE 8080
+
+ENTRYPOINT ["java","-jar","bookstore-app.jar"]

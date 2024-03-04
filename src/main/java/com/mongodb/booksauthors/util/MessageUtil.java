@@ -1,21 +1,25 @@
 package com.mongodb.booksauthors.util;
 
-import java.io.FileInputStream;
+import lombok.NoArgsConstructor;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
+@NoArgsConstructor
 public class MessageUtil {
 
-    private static final String MESSAGE_FILE_PATH = "src/main/resources/messages.properties";
+    private static final String MESSAGE_FILE_PATH = "/messages.properties";
 
     private static final Properties properties = load();
 
     private static Properties load() {
         Properties props = new Properties();
 
-        try (FileInputStream fileInputStream = new FileInputStream(MESSAGE_FILE_PATH)) {
+        try (InputStream fileInputStream = MessageUtil.class.getResourceAsStream(MESSAGE_FILE_PATH)) {
             props.load(fileInputStream);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new RuntimeException("Error on message file!", e);
         }
 
