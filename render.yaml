@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: bookstore
+    runtime: docker
+    dockerfilePath: ./Dockerfile-app
+    envVars:
+      - fromGroup: config-bookstore-api
+
+  - type: pserv
+    name: mongodb
+    runtime: docker
+    dockerfilePath: ./renderdockerfiles/Dockerfile-mongo
+    disk:
+      name: bookstore-db
+      mountPath: /data/db
+      sizeGB: 5
+    envVars:
+      - fromGroup: config-bookstore-mongo
+
+  - type: web
+    name: mongo-express
+    runtime: docker
+    dockerfilePath: ./renderdockerfiles/Dockerfile-mongoexpress
+    envVars:
+      - fromGroup: config-bookstore-mongo-express
+
+envVarGroups:
+  - name: config-bookstore-mongo-express
+    envVars:
+      - key: ME_CONFIG_BASICAUTH_USERNAME
+        value: admindb
+      - key: ME_CONFIG_BASICAUTH_PASSWORD
+        sync: false
+      - key: ME_CONFIG_MONGODB_PORT
+        value: 27017
+      - key: ME_CONFIG_MONGODB_ADMINUSERNAME
+        value: bookstore
+      - key: ME_CONFIG_MONGODB_ADMINPASSWORD
+        sync: false
+      - key: ME_CONFIG_MONGODB_SERVER
+        value: mongodb
+  - name: config-bookstore-mongo
+    envVars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: bookstore
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        sync: false
+  - name: config-bookstore-api
+    envVars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: bookstore
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        sync: false
+      - key: MONGODB_PORT
+        value: 27017
+      - key: MONGODB_SERVER
+        value: mongodb

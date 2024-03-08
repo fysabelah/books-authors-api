@@ -12,20 +12,21 @@ services:
     env_file:
       - .env
     networks:
-      - mongo-db-network
+      - bookstore-network
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
     restart: unless-stopped
     volumes:
-      - mongo-database:/data/db
+      - bookstore-database:/data/db
     ports:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     networks:
-      - mongo-db-network
+      - bookstore-network
 
   # Interface web para o mongo
   mongo-express:
@@ -46,10 +47,10 @@ services:
     depends_on:
       - mongodb
     networks:
-      - mongo-db-network
+      - bookstore-network
 
 networks:
-  mongo-db-network:
+  bookstore-network:
 
 volumes:
-  mongo-database:
+  bookstore-database:
