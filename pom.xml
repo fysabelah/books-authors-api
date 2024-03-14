@@ -10,11 +10,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.mongodb</groupId>
-	<artifactId>books-authors</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.store</groupId>
+	<artifactId>bookshelf</artifactId>
+	<version>1.0.0</version>
 	<name>books-authors</name>
-	<description>Estudo de MongoDB com Spring Boot.</description>
+	<description>An API for authors, books and publisher</description>
 
 	<properties>
 		<java.version>17</java.version>
@@ -22,8 +22,14 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
