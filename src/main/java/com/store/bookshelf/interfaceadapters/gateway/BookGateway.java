@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class BookGateway {
 
@@ -38,5 +41,14 @@ public class BookGateway {
         }
 
         return repository.save(book);
+    }
+
+    public List<Book> findAllByAuthorsId(Integer authorId) {
+        if (authorId == null) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0001", "Id"));
+        }
+
+        return repository.findAllByAuthorsId(authorId)
+                .orElse(new ArrayList<>());
     }
 }

@@ -2,7 +2,6 @@ package com.store.bookshelf.entities;
 
 import com.store.bookshelf.util.MessageUtil;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,6 +26,17 @@ public class Author implements Serializable {
 
     @Column(name = "birthdate", columnDefinition = "DATE")
     private LocalDate birthdate;
+
+    public Author(Integer id, String name, LocalDate birthdate) {
+        this.id = id;
+        this.setName(name);
+        this.setBirthdate(birthdate);
+    }
+
+    public Author(String name, LocalDate date) {
+        this.setName(name);
+        this.setBirthdate(date);
+    }
 
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {

@@ -4,11 +4,14 @@ import com.store.bookshelf.entities.Author;
 import com.store.bookshelf.entities.Book;
 import com.store.bookshelf.util.MessageUtil;
 import com.store.bookshelf.util.exceptions.ValidationsException;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
+@Component
 public class AuthorBusiness {
 
     public void delete(Author author, List<Book> books) throws ValidationsException {
@@ -21,17 +24,24 @@ public class AuthorBusiness {
         }
     }
 
-    public Author update(Author saved, String name, String birthdate) throws ValidationsException {
+    public Author update(Author saved, String name, String birthdate) {
         if (name == null && birthdate == null) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0003"));
         }
 
-        saved.setName(name);
+        if (name != null) {
+            saved.setName(name);
+        }
 
         if (birthdate != null) {
-            LocalDate date = LocalDate.parse(birthdate, DateTimeFormatter.ISO_LOCAL_DATE);
+            LocalDate date;
 
-            saved.setBirthdate(date);
+            try {
+                date = LocalDate.parse(birthdate, DateTimeFormatter.ISO_LOCAL_DATE);
+                saved.setBirthdate(date);
+            } catch (DateTimeParseException exception) {
+                throw new IllegalArgumentException(MessageUtil.getMessage("0004"));
+            }
         }
 
         return saved;

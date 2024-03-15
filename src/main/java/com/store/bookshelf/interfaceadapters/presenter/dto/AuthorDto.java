@@ -1,6 +1,5 @@
 package com.store.bookshelf.interfaceadapters.presenter.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-@JsonIgnoreProperties(value = {"id"}, allowGetters = true)
 public class AuthorDto extends Dto {
 
     @NotEmpty

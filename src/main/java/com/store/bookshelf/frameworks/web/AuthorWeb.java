@@ -33,7 +33,7 @@ public class AuthorWeb {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<AuthorDto> findById(@PathVariable String id) throws ValidationsException {
+    public ResponseEntity<AuthorDto> findById(@PathVariable Integer id) throws ValidationsException {
         return ResponseEntity.ok(controller.findById(id));
     }
 
@@ -46,7 +46,7 @@ public class AuthorWeb {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) throws ValidationsException {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws ValidationsException {
         controller.delete(id);
 
         return ResponseEntity.ok().build();

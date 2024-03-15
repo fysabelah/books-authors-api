@@ -8,15 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.Serializable;
 
-class GenericGateway<T extends Serializable> implements GenericGatewayInterface<T> {
+class GenericGateway<T extends Serializable> {
 
-    @Override
-    public T insert(T entity, JpaRepository<T, Integer> repository) {
+    protected T insert(T entity, JpaRepository<T, Integer> repository) {
         return save(entity, repository);
     }
 
-    @Override
-    public T update(T entity, JpaRepository<T, Integer> repository) {
+    protected T update(T entity, JpaRepository<T, Integer> repository) {
         return save(entity, repository);
     }
 
@@ -32,8 +30,7 @@ class GenericGateway<T extends Serializable> implements GenericGatewayInterface<
         }
     }
 
-    @Override
-    public T findById(Integer id, JpaRepository<T, Integer> repository) throws ValidationsException {
+    protected T findById(Integer id, JpaRepository<T, Integer> repository) throws ValidationsException {
         if (id == null) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0001", "Id"));
         }
@@ -42,15 +39,13 @@ class GenericGateway<T extends Serializable> implements GenericGatewayInterface<
                 .orElseThrow(() -> new ValidationsException("0100"));
     }
 
-    @Override
-    public void delete(T entity, JpaRepository<T, Integer> repository) {
+    protected void delete(T entity, JpaRepository<T, Integer> repository) {
         validateEntity(entity);
 
         repository.delete(entity);
     }
 
-    @Override
-    public Page<T> findAll(Pageable page, JpaRepository<T, Integer> repository) {
+    protected Page<T> findAll(Pageable page, JpaRepository<T, Integer> repository) {
         if (page == null) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0001", "P\u00E1gina"));
         }
