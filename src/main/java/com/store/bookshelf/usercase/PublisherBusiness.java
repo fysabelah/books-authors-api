@@ -1,8 +1,14 @@
 package com.store.bookshelf.usercase;
 
+import com.store.bookshelf.entities.Book;
 import com.store.bookshelf.entities.Publisher;
 import com.store.bookshelf.util.MessageUtil;
+import com.store.bookshelf.util.exceptions.ValidationsException;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+
+@Component
 public class PublisherBusiness {
 
     public Publisher update(String name, Publisher publisher) {
@@ -13,16 +19,12 @@ public class PublisherBusiness {
         return publisher;
     }
 
-    public Publisher delete(Publisher publisher) {
+    public void delete(Publisher publisher, List<Book> books) throws ValidationsException {
         validatePublisher(publisher);
 
-        if (publisher.getBooks() != null || !publisher.getBooks().isEmpty()) {
-            throw new IllegalArgumentException(MessageUtil.getMessage("0300"));
+        if (books != null && !books.isEmpty()) {
+            throw new ValidationsException("0300");
         }
-
-        publisher.setBooks(null);
-
-        return publisher;
     }
 
     private static void validatePublisher(Publisher publisher) {

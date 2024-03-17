@@ -17,4 +17,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
     Optional<Book> findBookByIdAndAuthorsId(Integer bookId, Integer authorId);
 
     Optional<List<Book>> findAllByAuthorsId(Integer authorId);
+
+    Optional<List<Book>> findAllByPublishersId(Integer id);
 }

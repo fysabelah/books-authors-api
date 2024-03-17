@@ -26,6 +26,7 @@ public class BookPresenter implements Presenter<Book, BookDto> {
                 dto.getTitle(),
                 dto.getGenre(),
                 dto.getPages(),
-                authorPresenter.convert(dto.getAuthors()));
+                authorPresenter.convert(dto.getAuthors()),
+                null);
     }
 }

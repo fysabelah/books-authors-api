@@ -5,6 +5,7 @@ import com.store.bookshelf.interfaceadapters.presenter.dto.AuthorDto;
 import com.store.bookshelf.util.exceptions.ValidationsException;
 import com.store.bookshelf.util.pagination.PagedResponse;
 import com.store.bookshelf.util.pagination.Pagination;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -38,6 +39,7 @@ public class AuthorWeb {
     }
 
     @GetMapping
+    @Operation(summary = "The result is sort by name")
     public ResponseEntity<PagedResponse<AuthorDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
                                                             @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage) {
         Pagination page = new Pagination(initialPage, pageSize);

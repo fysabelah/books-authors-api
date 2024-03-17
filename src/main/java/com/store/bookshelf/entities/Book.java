@@ -37,6 +37,10 @@ public class Book implements Serializable {
     @JoinTable(name = "authors_books", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Author> authors;
 
+    @ManyToMany
+    @JoinTable(name = "publisher_books", joinColumns = @JoinColumn(name = "publisher_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Publisher> publishers;
+
     public void setTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0001", "Título"));

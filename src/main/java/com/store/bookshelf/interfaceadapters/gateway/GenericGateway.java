@@ -36,7 +36,7 @@ class GenericGateway<T extends Serializable> {
         }
 
         return repository.findById(id)
-                .orElseThrow(() -> new ValidationsException("0100"));
+                .orElseThrow(() -> new ValidationsException("0005", id.toString()));
     }
 
     protected void delete(T entity, JpaRepository<T, Integer> repository) {

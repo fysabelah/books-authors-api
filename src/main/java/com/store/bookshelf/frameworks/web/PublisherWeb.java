@@ -5,6 +5,7 @@ import com.store.bookshelf.interfaceadapters.presenter.dto.PublisherDto;
 import com.store.bookshelf.util.exceptions.ValidationsException;
 import com.store.bookshelf.util.pagination.PagedResponse;
 import com.store.bookshelf.util.pagination.Pagination;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -25,17 +26,19 @@ public class PublisherWeb {
         return ResponseEntity.ok(controller.insert(publisher));
     }
 
-    @PutMapping
-    public ResponseEntity<PublisherDto> update(@Valid @RequestBody PublisherDto publisher) throws ValidationsException {
-        return ResponseEntity.ok(controller.update(publisher));
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PublisherDto> update(@PathVariable Integer id,
+                                               @Parameter(description = "New name", example = "Darkside") @RequestParam String name) throws ValidationsException {
+        return ResponseEntity.ok(controller.update(id, name));
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PublisherDto> findById(@PathVariable String id) throws ValidationsException {
+    public ResponseEntity<PublisherDto> findById(@PathVariable Integer id) throws ValidationsException {
         return ResponseEntity.ok(controller.findById(id));
     }
 
     @GetMapping
+    @Operation(summary = "The result is sort by name")
     public ResponseEntity<PagedResponse<PublisherDto>> findAll(@Parameter(description = "Default value 10. Max value 1000", example = "10") @RequestParam(required = false) Integer pageSize,
                                                                @Parameter(description = "Default value 0", example = "0") @RequestParam(required = false) Integer initialPage) {
         Pagination page = new Pagination(initialPage, pageSize);
@@ -44,7 +47,7 @@ public class PublisherWeb {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) throws ValidationsException {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) throws ValidationsException {
         controller.delete(id);
 
         return ResponseEntity.ok().build();

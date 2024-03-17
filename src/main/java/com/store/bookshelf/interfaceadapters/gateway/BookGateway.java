@@ -51,4 +51,13 @@ public class BookGateway {
         return repository.findAllByAuthorsId(authorId)
                 .orElse(new ArrayList<>());
     }
+
+    public List<Book> findByPublishersId(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException(MessageUtil.getMessage("0001", "Id"));
+        }
+
+        return repository.findAllByPublishersId(id)
+                .orElse(new ArrayList<>());
+    }
 }
