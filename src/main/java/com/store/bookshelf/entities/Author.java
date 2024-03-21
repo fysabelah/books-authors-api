@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -26,6 +28,10 @@ public class Author implements Serializable {
 
     @Column(name = "birthdate", columnDefinition = "DATE")
     private LocalDate birthdate;
+
+    @ManyToMany
+    @JoinTable(name = "authors_books", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> books;
 
     public Author(Integer id, String name, LocalDate birthdate) {
         this.id = id;
@@ -52,5 +58,13 @@ public class Author implements Serializable {
         }
 
         this.birthdate = birthdate;
+    }
+
+    public void addBook(Book book) {
+        if (this.books == null || this.books.isEmpty()) {
+            books = new ArrayList<>();
+        }
+
+        this.books.add(book);
     }
 }

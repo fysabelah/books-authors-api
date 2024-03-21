@@ -1,7 +1,6 @@
 package com.store.bookshelf.usercase;
 
 import com.store.bookshelf.entities.Author;
-import com.store.bookshelf.entities.Book;
 import com.store.bookshelf.util.MessageUtil;
 import com.store.bookshelf.util.exceptions.ValidationsException;
 import org.springframework.stereotype.Component;
@@ -9,18 +8,17 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.List;
 
 @Component
 public class AuthorBusiness {
 
-    public void delete(Author author, List<Book> books) throws ValidationsException {
+    public void delete(Author author) throws ValidationsException {
         if (author == null) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0002", "Autor"));
         }
 
-        if (books != null && !books.isEmpty()) {
-            throw new ValidationsException("0201");
+        if (author.getBooks() != null && !author.getBooks().isEmpty()) {
+            throw new ValidationsException("0200");
         }
     }
 

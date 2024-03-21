@@ -50,7 +50,9 @@ class PublisherBusinessTest {
 
         List<Book> books = new ArrayList<>();
 
-        assertDoesNotThrow(() -> business.delete(publisher, books));
+        publisher.setBooks(books);
+
+        assertDoesNotThrow(() -> business.delete(publisher));
     }
 
     @Test
@@ -61,8 +63,10 @@ class PublisherBusinessTest {
         List<Book> books = new ArrayList<>();
         books.add(new Book());
 
+        publisher.setBooks(books);
+
         try {
-            business.delete(publisher, books);
+            business.delete(publisher);
         } catch (ValidationsException exception) {
             assertEquals(MessageUtil.getMessage("0300"), exception.getMessage());
         }
@@ -71,7 +75,7 @@ class PublisherBusinessTest {
     @Test
     void testDeleteNullPublisher() throws ValidationsException {
         try {
-            business.delete(null, new ArrayList<>());
+            business.delete(null);
         } catch (IllegalArgumentException exception) {
             assertEquals(exception.getMessage(), MessageUtil.getMessage("0003"));
         }

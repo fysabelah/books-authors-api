@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Publisher")
 @Table(name = "publisher")
@@ -25,11 +27,23 @@ public class Publisher implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @ManyToMany
+    @JoinTable(name = "publisher_books", joinColumns = @JoinColumn(name = "publisher_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private List<Book> books;
+
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException(MessageUtil.getMessage("0001", "Nome"));
         }
 
         this.name = name;
+    }
+
+    public void addBook(Book book) {
+        if (this.books == null || this.books.isEmpty()) {
+            books = new ArrayList<>();
+        }
+
+        this.books.add(book);
     }
 }

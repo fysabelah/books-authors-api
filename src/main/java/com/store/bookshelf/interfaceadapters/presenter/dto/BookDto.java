@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @NoArgsConstructor
 @Getter
 @Setter
@@ -26,15 +24,10 @@ public class BookDto extends Dto {
     @Positive
     private Integer pages;
 
-
-    @NotEmpty
-    private List<AuthorDto> authors;
-
-    public BookDto(Integer id, String title, Genre genre, Integer pages, List<AuthorDto> authors) {
+    public BookDto(Integer id, String title, Genre genre, Integer pages) {
         super(id);
         this.title = title;
         this.genre = genre;
         this.pages = pages;
-        this.authors = authors;
     }
 }

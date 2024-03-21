@@ -1,6 +1,5 @@
 package com.store.bookshelf.interfaceadapters.controllers;
 
-import com.store.bookshelf.entities.Book;
 import com.store.bookshelf.entities.Publisher;
 import com.store.bookshelf.interfaceadapters.gateway.BookGateway;
 import com.store.bookshelf.interfaceadapters.gateway.PublisherGateway;
@@ -16,8 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class PublisherController {
@@ -60,9 +57,8 @@ public class PublisherController {
 
     public void delete(Integer id) throws ValidationsException {
         Publisher publisher = getPublisher(id);
-        List<Book> books = bookGateway.findByPublishersId(id);
 
-        business.delete(publisher, books);
+        business.delete(publisher);
 
         gateway.delete(publisher);
     }

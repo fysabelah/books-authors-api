@@ -33,10 +33,12 @@ class AuthorBusinessTest {
         List<Book> books = new ArrayList<>();
         books.add(new Book());
 
+        author.setBooks(books);
+
         try {
-            business.delete(author, books);
+            business.delete(author);
         } catch (ValidationsException e) {
-            assertEquals(e.getMessage(), MessageUtil.getMessage("0201"));
+            assertEquals(e.getMessage(), MessageUtil.getMessage("0200"));
         }
     }
 
@@ -48,7 +50,7 @@ class AuthorBusinessTest {
 
         List<Book> books = new ArrayList<>();
 
-        assertDoesNotThrow(() -> business.delete(author, books));
+        assertDoesNotThrow(() -> business.delete(author));
     }
 
     @Test
