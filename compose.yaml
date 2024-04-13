@@ -7,12 +7,39 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      - mongodb
+      - postgres
     restart: unless-stopped
     env_file:
       - .env
     networks:
       - bookstore-network
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    volumes:
+      - bookstore-database:/var/lib/postgresql/data
+    networks:
+      - bookstore-network
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+    expose:
+      - "5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:8.5
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    networks:
+      - bookstore-network
+    ports:
+      - 8081:80
+    depends_on:
+      - postgres
 
 networks:
   bookstore-network:

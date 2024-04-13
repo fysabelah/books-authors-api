@@ -3,6 +3,7 @@ package com.store.bookshelf.frameworks.web;
 import com.store.bookshelf.interfaceadapters.controllers.BookController;
 import com.store.bookshelf.interfaceadapters.presenter.dto.BookCreateDto;
 import com.store.bookshelf.interfaceadapters.presenter.dto.BookDto;
+import com.store.bookshelf.interfaceadapters.presenter.dto.BookFullDto;
 import com.store.bookshelf.util.enums.Genre;
 import com.store.bookshelf.util.exceptions.ValidationsException;
 import com.store.bookshelf.util.pagination.PagedResponse;
@@ -57,10 +58,15 @@ public class BookWeb {
     }
 
     @GetMapping(value = "/{id}")
-    @Operation(summary = "Buscar livro por id com flag para validar o tipo de retorno")
-    public ResponseEntity<BookDto> findById(@PathVariable Integer id,
-                                            @Parameter(description = "Flag to decide if the result should have authors and publisher") @RequestParam boolean isFullBook) throws ValidationsException {
-        return ResponseEntity.ok(controller.findById(id, isFullBook));
+    @Operation(summary = "Buscar livro por id")
+    public ResponseEntity<BookDto> findById(@PathVariable Integer id) throws ValidationsException {
+        return ResponseEntity.ok(controller.findById(id));
+    }
+
+    @GetMapping(value = "/full/{id}")
+    @Operation(summary = "Buscar livro completo por id")
+    public ResponseEntity<BookFullDto> findBookById(@PathVariable Integer id) throws ValidationsException {
+        return ResponseEntity.ok(controller.findBookById(id));
     }
 
     @GetMapping

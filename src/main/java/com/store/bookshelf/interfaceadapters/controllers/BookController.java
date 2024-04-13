@@ -97,17 +97,19 @@ public class BookController {
         gateway.delete(book);
     }
 
-    public BookDto findById(Integer id, boolean isFullBook) throws ValidationsException {
+    public BookFullDto findBookById(Integer id) throws ValidationsException {
         Book book = gateway.findById(id);
-
-        if (!isFullBook) {
-            return presenter.convert(book);
-        }
 
         List<Author> authors = authorGateway.findByBookId(id);
         List<Publisher> publisher = publisherGateway.findByBookId(id);
 
         return presenter.convert(book, authors, publisher);
+    }
+
+    public BookDto findById(Integer id) throws ValidationsException {
+        Book book = gateway.findById(id);
+
+        return presenter.convert(book);
     }
 
     public void removeAuthor(Integer bookId, Integer authorId) throws ValidationsException {

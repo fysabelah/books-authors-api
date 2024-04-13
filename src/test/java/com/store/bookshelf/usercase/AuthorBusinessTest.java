@@ -48,8 +48,6 @@ class AuthorBusinessTest {
         author.setName("John Doe");
         author.setBirthdate(LocalDate.now());
 
-        List<Book> books = new ArrayList<>();
-
         assertDoesNotThrow(() -> business.delete(author));
     }
 
