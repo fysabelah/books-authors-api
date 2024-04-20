@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
-@SpringBootTest(classes = AuthorBusiness.class)
-@EnabledIf(value = "#{environment.getActiveProfiles()[0] == 'prod'}", loadContext = true)
+//@SpringBootTest(classes = AuthorBusiness.class)
+//@EnabledIf(value = "#{environment.getActiveProfiles()[0] == 'prod'}", loadContext = true)
 class AuthorControllerTest {
 
     @BeforeEach
